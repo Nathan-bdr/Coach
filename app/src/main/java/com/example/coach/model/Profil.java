@@ -27,8 +27,9 @@ public class Profil {
     private Integer age;
     private  Integer sexe;
     private Date dateMesure;
-    private  double img;
-    private int indice;
+    // propriétés ignorées par Gson donc non envoyées vers l'API
+    private transient double img;
+    private transient int indice;
 
     /**
      * Constructeur : valorise les propriétés
