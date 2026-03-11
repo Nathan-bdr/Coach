@@ -1,15 +1,16 @@
 package com.example.coach.model;
 
 import static org.junit.Assert.*;
+import java.util.Date;
 
 import org.junit.Test;
 
 public class ProfilTest {
 
     //profils à tester
-    private Profil profilMaigre = new Profil (45, 170, 20, 0);
-    private Profil profilNormal = new Profil (70, 180, 40, 1);
-    private Profil profilGras = new Profil (67, 165, 35, 0);
+    private Profil profilMaigre = new Profil (45, 170, 20, 0, new Date());
+    private Profil profilNormal = new Profil (70, 180, 40, 1, new Date());
+    private Profil profilGras = new Profil (67, 165, 35, 0, new Date());
 
     @Test
     public void getImage() {
