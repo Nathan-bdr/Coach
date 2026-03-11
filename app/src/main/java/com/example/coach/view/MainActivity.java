@@ -53,7 +53,8 @@ public class MainActivity extends AppCompatActivity implements ICalculView {
      */
     private void init(){
         chargeObjetsGraphiques();
-        presenter = new CalculPresenter(this);
+        presenter = new CalculPresenter(this, this);
+        presenter.chargerProfil();
         btnCalc.setOnClickListener(v -> btnCalc_clic());
     }
 
@@ -65,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements ICalculView {
         txtTaille = findViewById(R.id.txtTaille);
         txtAge = findViewById(R.id.txtAge);
         rdHomme = findViewById(R.id.rdHomme);
+        rdFemme = findViewById(R.id.rdFemme);
         lblImg = findViewById(R.id.lblResultat);
         imgSmiley = findViewById(R.id.imgSmiley);
         btnCalc = findViewById(R.id.btnCalc);

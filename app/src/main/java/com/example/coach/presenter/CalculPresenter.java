@@ -3,6 +3,9 @@ package com.example.coach.presenter;
 import com.example.coach.contract.ICalculView;
 import com.example.coach.model.Profil;
 import java.util.Date;
+import android.content.Context;
+import android.content.SharedPreferences;
+import com.google.gson.Gson;
 
 /**
  * 'presenter' dédié à la vue qui affiche le calcul de l'img
@@ -10,13 +13,19 @@ import java.util.Date;
 public class CalculPresenter {
     private ICalculView vue;
     private Profil profil;
+    private static final String NOM_FIC = "coach_fic";
+    private static final String PROFIL_CLE = "profil_json";
+    private Gson gson;
+    private SharedPreferences prefs;
 
     /**
      * Constructeur : valorise la propriété qui permet d'accéder à la vue
      * @param vue
      */
-    public CalculPresenter(ICalculView vue) {
+    public CalculPresenter(ICalculView vue, Context context) {
         this.vue = vue;
+        this.prefs = context.getSharedPreferences(NOM_FIC, Context.MODE_PRIVATE);
+        this.gson = new Gson();
     }
 
     /**
@@ -29,6 +38,7 @@ public class CalculPresenter {
      */
     public void creerProfil(Integer poids, Integer taille, Integer age, Integer sexe) {
         profil = new Profil(poids, taille, age, sexe, new Date());
+        sauvegarderProfil(profil);
 
         // On pousse les résultats vers la vue
         vue.afficherResultat(
@@ -37,5 +47,32 @@ public class CalculPresenter {
                 profil.getMessage(),
                 profil.normal()
         );
+    }
+
+    /**
+     * Enregistre le profil dans un fichier
+     * @param profil
+     */
+    private void sauvegarderProfil(Profil profil){
+        String json = gson.toJson(profil);
+        prefs.edit().putString(PROFIL_CLE, json).apply();
+    }
+
+    /**
+     * Récupère le profil enregistré et envoie ses informations vers la vue
+     */
+    public void chargerProfil(){
+        String json = prefs.getString(PROFIL_CLE, null);
+        if (json != null){
+            Profil profil = gson.fromJson(json, Profil.class);
+
+            // on pousse les informations vers la vue
+            vue.remplirChamps(
+                    profil.getPoids(),
+                    profil.getTaille(),
+                    profil.getAge(),
+                    profil.getSexe()
+            );
+        }
     }
 }
