@@ -1,11 +1,12 @@
 package com.example.coach.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Classe métier contenant les informations d'un profil
  */
-public class Profil {
+public class Profil implements Serializable {
     // Constantes pour les bornes IMG
     private static final int minFemme = 25;
     private static final int maxFemme = 30;
@@ -94,10 +95,10 @@ public class Profil {
 
     /**
      *
-     * @return valeur de l'img
+     * @return valeur de l'img calculé
      */
     public double getImg() {
-        return img;
+        return calculImg();
     }
 
     /**
