@@ -65,6 +65,15 @@
                 android:layout_weight="0"
                 app:srcCompat="@drawable/historique" />
 
+            <Button
+                android:id="@+id/btnPurge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="?attr/actionBarSize"
+                android:layout_weight="0"
+                android:text="Purger les anciens profils" />
+
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

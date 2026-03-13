@@ -12,6 +12,11 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.coach.R;
 
+import android.widget.Button;
+import android.widget.Toast;
+import com.example.coach.api.HelperApi;
+import com.example.coach.api.ICallbackApi;
+
 /**
  * Activity qui affiche le menu
  */
@@ -19,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ImageButton btnMonIMG;
     private ImageButton btnMonHistorique;
+
+    private Button btnPurge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private void chargeObjetsGraphiques() {
         btnMonIMG = findViewById(R.id.btnMonIMG);
         btnMonHistorique = findViewById(R.id.btnMonHistorique);
+        btnPurge = findViewById(R.id.btnPurge);
     }
 
     /**
@@ -55,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
     private void creerMenu(){
         btnMonIMG.setOnClickListener(v -> ecouteMenu(CalculActivity.class));
         btnMonHistorique.setOnClickListener(v -> ecouteMenu(HistoActivity.class));
+        btnPurge.setOnClickListener(v -> ecoutePurge());
     }
 
     /**
@@ -64,5 +73,21 @@ public class MainActivity extends AppCompatActivity {
     private void ecouteMenu(Class classe){
         Intent intent = new Intent(MainActivity.this, classe);
         startActivity(intent);
+    }
+
+    /**
+     * Demande de purge des profils via l'API
+     */
+    private void ecoutePurge() {
+        HelperApi.call(HelperApi.getApi().purgerProfils(), new ICallbackApi<Integer>() {
+            @Override
+            public void onSuccess(Integer result) {
+                Toast.makeText(MainActivity.this, result + " profils supprimés", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onError() {
+                Toast.makeText(MainActivity.this, "échec de purge", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

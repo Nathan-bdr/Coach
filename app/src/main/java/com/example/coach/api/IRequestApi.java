@@ -46,4 +46,11 @@ public interface IRequestApi {
      */
     @DELETE("profil/{champs}")
     Call<ResponseApi<Integer>> supprProfil(@Path(value = "champs", encoded = true) String profilJson);
+
+    /**
+     * Envoi en DELETE pour purger les profils (garder les 5 plus récents)
+     * @return objet Call permettant d'exécuter la requête (la réponse étant le nombre de lignes supprimées)
+     */
+    @DELETE("profil")
+    Call<ResponseApi<Integer>> purgerProfils();
 }
